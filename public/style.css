@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f9f9f9;
+}
+h1 {
+  color: #007acc;
+}
+form {
+  margin-bottom: 20px;
+}
+input[type="file"] {
+  padding: 5px;
+}
+button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+}
+table {
+  border-collapse: collapse;
+  background: #fff;
+  width: 100%;
+  margin-bottom: 20px;
+}
+th {
+  background-color: #007acc;
+  color: white;
+}
+td, th {
+  padding: 10px;
+  text-align: center;
+}

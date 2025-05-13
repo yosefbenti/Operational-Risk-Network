@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Network Data Analyzer</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>📊 Branch Network Analyzer</h1>
+
+  <form action="/upload-city" method="post" enctype="multipart/form-data">
+    <label><strong>Upload City Excel:</strong></label><br>
+    <input type="file" name="excelFile" required>
+    <button type="submit">Upload & Analyze City</button>
+  </form>
+
+  <form action="/upload-outline" method="post" enctype="multipart/form-data">
+    <label><strong>Upload Outline Excel:</strong></label><br>
+    <input type="file" name="excelFile" required>
+    <button type="submit">Upload & Analyze Outline</button>
+  </form>
+
+  <% const renderTable = (label, summary) => { %>
+    <h2><%= label %> Summary</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Count</th>
+          <th>Average</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Total Branches</strong></td>
+          <td><%= summary.total %></td>
+          <td><%= summary.overallAverage %></td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>≥ 90%</td>
+          <td><%= summary.categories.above90Count %></td>
+          <td><%= summary.categoryAverages.above90 %></td>
+          <td><%= summary.categories.above90Percent %></td>
+        </tr>
+        <tr>
+          <td>85% - 89.99%</td>
+          <td><%= summary.categories.between85Count %></td>
+          <td><%= summary.categoryAverages.between85 %></td>
+          <td><%= summary.categories.between85Percent %></td>
+        </tr>
+        <tr>
+          <td>&lt; 85%</td>
+          <td><%= summary.categories.below85Count %></td>
+          <td><%= summary.categoryAverages.below85 %></td>
+          <td><%= summary.categories.below85Percent %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (data && data.city) { renderTable("City", data.city); } %>
+  <% if (data && data.outline) { renderTable("Outline", data.outline); } %>
+
+  <% if (data && (data.city || data.outline)) { %>
+    <form action="/download" method="post">
+      <button type="submit">📥 Download Summary Excel</button>
+    </form>
+  <% } %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html>
+<head>
+  <title>Branch Outline Analyzer</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>📊 Branch Outline Analyzer</h1>
+
+  
+  <form action="/upload-city" method="post" enctype="multipart/form-data">
+    <label><strong>Upload City Excel:</strong></label><br>
+    <input type="file" name="excelFile" required>
+    <button type="submit">Upload & Analyze City</button>
+  </form>
+
+  
+  <form action="/upload-outline" method="post" enctype="multipart/form-data">
+    <label><strong>Upload Outline Excel:</strong></label><br>
+    <input type="file" name="excelFile" required>
+    <button type="submit">Upload & Analyze Outline</button>
+  </form>
+
+  <% if (data && data.city) { %>
+    <h2>City Summary</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Count</th>
+          <th>Average</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Branches</td>
+          <td><%= data.city.total %></td>
+          <td><%= data.city.overallAverage %></td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>≥ 90%</td>
+          <td><%= data.city.categories.above90Count %></td>
+          <td><%= data.city.categoryAverages.above90 %></td>
+          <td><%= data.city.categories.above90Percent %></td>
+        </tr>
+        <tr>
+          <td>85% - 89.99%</td>
+          <td><%= data.city.categories.between85Count %></td>
+          <td><%= data.city.categoryAverages.between85 %></td>
+          <td><%= data.city.categories.between85Percent %></td>
+        </tr>
+        <tr>
+          <td>< 85%</td>
+          <td><%= data.city.categories.below85Count %></td>
+          <td><%= data.city.categoryAverages.below85 %></td>
+          <td><%= data.city.categories.below85Percent %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (data && data.outline) { %>
+    <h2>Branch Outline Summary</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Count</th>
+          <th>Average</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Branches</td>
+          <td><%= data.outline.total %></td>
+          <td><%= data.outline.overallAverage %></td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>≥ 90%</td>
+          <td><%= data.outline.categories.above90Count %></td>
+          <td><%= data.outline.categoryAverages.above90 %></td>
+          <td><%= data.outline.categories.above90Percent %></td>
+        </tr>
+        <tr>
+          <td>85% - 89.99%</td>
+          <td><%= data.outline.categories.between85Count %></td>
+          <td><%= data.outline.categoryAverages.between85 %></td>
+          <td><%= data.outline.categories.between85Percent %></td>
+        </tr>
+        <tr>
+          <td>< 85%</td>
+          <td><%= data.outline.categories.below85Count %></td>
+          <td><%= data.outline.categoryAverages.below85 %></td>
+          <td><%= data.outline.categories.below85Percent %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (data) { %>
+    <form action="/download" method="POST">
+      <input type="hidden" name="summaryData" value='<%- JSON.stringify(data) %>'>
+      <button type="submit">Download Summary Excel</button>
+    </form>
+  <% } %>
+</body>
+</html>-->
